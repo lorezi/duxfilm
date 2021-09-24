@@ -60,7 +60,7 @@ func main() {
 	}
 
 	// Start the HTTP server
-	logger.Printf("startind %s server on %s 😁😀😀", cfg.env, srv.Addr)
+	logger.Printf("starting %s server on %s 😀😀😀", cfg.env, srv.Addr)
 	err := srv.ListenAndServe()
 	logger.Fatal(err)
 }
