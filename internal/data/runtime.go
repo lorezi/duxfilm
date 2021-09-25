@@ -1,3 +1,4 @@
+// generates a custom JSON type for duration
 package data
 
 import (
