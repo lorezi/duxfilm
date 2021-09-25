@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/lorezi/duxfilm/internal/data"
 )
@@ -18,13 +17,12 @@ func (app *application) getMovieHandler(w http.ResponseWriter, r *http.Request) 
 		http.NotFound(w, r)
 		return
 	}
-	movie := data.Movie{
-		ID:        id,
-		Title:     "Godfather",
-		Duration:  202,
-		Genres:    []string{"drama", "action"},
-		Version:   1,
-		CreatedAt: time.Now(),
+	movie := data.MovieResponse{
+		ID:       id,
+		Title:    "Godfather",
+		Duration: 202,
+		Genres:   []string{"drama", "action"},
+		Version:  1,
 	}
 
 	// encode the movie data
