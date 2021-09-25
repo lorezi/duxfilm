@@ -20,7 +20,7 @@ type MovieResponse struct {
 	ID       int64    `json:"id"`
 	Title    string   `json:"title"`
 	Year     int32    `json:"year,omitempty"`
-	Duration int32    `json:"duration,omitempty"`
+	Duration Duration `json:"duration,omitempty"`
 	Genres   []string `json:"genres,omitempty"`
 	Version  int32    `json:"version"`
 }
