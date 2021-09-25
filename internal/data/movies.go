@@ -2,6 +2,10 @@ package data
 
 import "time"
 
+// type Envelope struct {
+// 	Movie MovieResponse `json:"movie"`
+// }
+
 type Movie struct {
 	ID        int64     `json:"id"`
 	Title     string    `json:"title"`
