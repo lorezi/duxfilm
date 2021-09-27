@@ -46,6 +46,7 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data envelo
 	return nil
 }
 
+// powerful and reusable helper
 func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst interface{}) error {
 	maxBytes := 1_048_576
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
@@ -82,7 +83,7 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst int
 	}
 
 	err = dec.Decode(&struct{}{})
-	if err != nil {
+	if err != io.EOF {
 		return errors.New("request body must contain a single JSON value")
 	}
 
