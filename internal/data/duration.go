@@ -27,19 +27,24 @@ func (d *Duration) UnmarshalJSON(jsonValue []byte) error {
 	// remove the double quotes for the JSON value
 	unQuotedJSONValue, err := strconv.Unquote(string(jsonValue))
 	if err != nil {
+
 		return ErrInvalidDurationFormat
 	}
 
-	parts := strings.Split(unQuotedJSONValue, "")
+	parts := strings.Split(unQuotedJSONValue, " ")
+	fmt.Println(parts[0])
+	fmt.Println(parts[1])
 
 	// sanity check
 	if len(parts) != 2 || parts[1] != "mins" {
+
 		return ErrInvalidDurationFormat
 	}
 
 	// convert the string to int32
 	i, err := strconv.ParseInt(parts[0], 10, 32)
 	if err != nil {
+
 		return ErrInvalidDurationFormat
 	}
 
