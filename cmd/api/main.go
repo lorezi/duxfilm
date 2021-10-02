@@ -9,6 +9,9 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	_ "github.com/lib/pq"
+	"github.com/subosito/gotenv"
 )
 
 // Declare a string containing the application version number.
@@ -31,6 +34,9 @@ type application struct {
 }
 
 func main() {
+	gotenv.Load()
+	dsn := "postgres://" + os.Getenv("DBUSER") + ":" + os.Getenv("DBPASS") + "@" + os.Getenv("DBHOST") + "/" + os.Getenv("DBNAME") + "?sslmode=disable"
+
 	// Declare an instance of the config struct
 	var cfg config
 
@@ -40,6 +46,7 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 3000, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Environment (development|staging|production)")
+	flag.StringVar(&cfg.db.dsn, "db-dsn", dsn, "PostgreSQL DSN")
 	flag.Parse()
 
 	// Initialize a new logger which writes messages to the standard out stream prefixed with current date and time.
