@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  dux_film_db:
+    container_name: "dux-postgres"
+    image: postgres:10.3
+    environment:
+      POSTGRES_DB: "duxfilm"
+      POSTGRES_USER: "johnwick"
+      POSTGRES_PASSWORD: "wazobia"
+    restart: unless-stopped
+    volumes:
+      - .dbdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
