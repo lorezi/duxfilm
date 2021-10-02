@@ -24,16 +24,19 @@ func (d *Duration) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Duration) UnmarshalJSON(jsonValue []byte) error {
+	var parts []string
 	// remove the double quotes for the JSON value
 	unQuotedJSONValue, err := strconv.Unquote(string(jsonValue))
 	if err != nil {
-
 		return ErrInvalidDurationFormat
 	}
 
-	parts := strings.Split(unQuotedJSONValue, " ")
-	fmt.Println(parts[0])
-	fmt.Println(parts[1])
+	// added validation logic
+	if !strings.Contains(unQuotedJSONValue, " ") {
+		return ErrInvalidDurationFormat
+	}
+
+	parts = strings.Split(unQuotedJSONValue, " ")
 
 	// sanity check
 	if len(parts) != 2 || parts[1] != "mins" {
