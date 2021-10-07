@@ -8,3 +8,4 @@ a JSON API for retrieving and managing information about movies.
 2. Error management - Triaged the Decode error
    - Triaging the Decode error gracefully handles errors and makes the error messages simpler, clearer, consistent in formatting and avoids unnecessary exposure of information.
 3. Custom request body validation
+4. SQL database schema migrations
