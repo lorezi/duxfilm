@@ -1,7 +1,7 @@
 ALTER Table
   movies
 ADD
-  CONSTRAINT movies_duration_check CHECK (runtime >= 0);
+  CONSTRAINT movies_duration_check CHECK (duration >= 0);
 ALTER Table
   movies
 ADD
