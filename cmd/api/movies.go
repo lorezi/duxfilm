@@ -46,7 +46,7 @@ func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Reques
 	movie := &data.Movie{
 		Title:    req.Title,
 		Year:     req.Year,
-		Duration: req.Duration,
+		Duration: int32(req.Duration),
 		Genres:   req.Genres,
 	}
 

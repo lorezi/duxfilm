@@ -47,11 +47,11 @@ func (d *Duration) UnmarshalJSON(jsonValue []byte) error {
 	// convert the string to int32
 	i, err := strconv.ParseInt(parts[0], 10, 32)
 	if err != nil {
-
 		return ErrInvalidDurationFormat
 	}
 
 	// convert the i to duration type
+
 	*d = Duration(i)
 
 	return nil

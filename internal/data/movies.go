@@ -35,7 +35,7 @@ type MovieRequest struct {
 	ID       int64    `json:"id"`
 	Title    string   `json:"title"`
 	Year     int32    `json:"year"`
-	Duration int32    `json:"duration"`
+	Duration Duration `json:"duration"`
 	Genres   []string `json:"genres"`
 }
 
