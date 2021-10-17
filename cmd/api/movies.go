@@ -8,38 +8,6 @@ import (
 	"github.com/lorezi/duxfilm/internal/validator"
 )
 
-func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Request) {
-	var input struct {
-		Title    string        `json:"title"`
-		Year     int32         `json:"year"`
-		Duration data.Duration `json:"duration"`
-		Genres   []string      `json:"genres"`
-	}
-
-	err := app.readJSON(w, r, &input)
-	if err != nil {
-		app.badRequestResponse(w, r, err)
-		return
-	}
-
-	movie := &data.Movie{
-		Title:    input.Title,
-		Year:     input.Year,
-		Duration: int32(input.Duration),
-		Genres:   input.Genres,
-	}
-
-	// validation
-	v := validator.New()
-
-	if data.ValidateMovie(v, movie); !v.Valid() {
-		app.failedValidationResponse(w, r, v.Errors)
-		return
-	}
-
-	fmt.Fprintf(w, "%+v\n", input)
-}
-
 func (app *application) getMovieHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := app.getParamID(r)
 	if err != nil {
@@ -64,4 +32,43 @@ func (app *application) getMovieHandler(w http.ResponseWriter, r *http.Request) 
 		app.serverErrorResponse(w, r, err)
 	}
 
+}
+
+func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Request) {
+	var req data.MovieRequest
+	// 1. Read JSON to Object
+	err := app.readJSON(w, r, &req)
+	if err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	movie := &data.Movie{
+		Title:    req.Title,
+		Year:     req.Year,
+		Duration: req.Duration,
+		Genres:   req.Genres,
+	}
+
+	//2. Validate the data
+	v := validator.New()
+
+	// 3. Store the data
+	if data.ValidateMovie(v, movie); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
+	}
+	err = app.models.Movies.Insert(movie)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+		return
+	}
+
+	headers := make(http.Header)
+	headers.Set("Location", fmt.Sprintf("/v1/movies/%d", movie.ID))
+
+	err = app.writeJSON(w, http.StatusCreated, envelope{"movie": movie}, headers)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
+	}
 }
