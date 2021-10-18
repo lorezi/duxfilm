@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -14,17 +15,15 @@ func (app *application) getMovieHandler(w http.ResponseWriter, r *http.Request) 
 		app.notFoundResponse(w, r)
 		return
 	}
-	movie := data.MovieResponse{
-		ID:       id,
-		Title:    "Godfather",
-		Duration: 202,
-		Genres:   []string{"drama", "action"},
-		Version:  1,
+	movie, err := app.models.Movies.Get(id)
+	if err != nil {
+		if errors.Is(err, data.ErrRecordNotFound) {
+			app.notFoundResponse(w, r)
+			return
+		}
+		app.serverErrorResponse(w, r, err)
+		return
 	}
-
-	// movieres := data.Envelope{
-	// 	Movie: movie,
-	// }
 
 	// encode the movie data
 	err = app.writeJSON(w, http.StatusOK, envelope{"movie": movie}, nil)
