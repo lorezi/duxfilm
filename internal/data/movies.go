@@ -73,7 +73,7 @@ func (m MovieModel) Get(id int64) (*Movie, error) {
 	}
 
 	query := `
-		SELECT title, year, duration, genres, version, created_at
+		SELECT id, title, year, duration, genres, version, created_at
 		FROM movies
 		WHERE id = $1
 	`
@@ -81,6 +81,7 @@ func (m MovieModel) Get(id int64) (*Movie, error) {
 	var movie Movie
 
 	err := m.DB.QueryRow(query, id).Scan(
+		&movie.ID,
 		&movie.Title,
 		&movie.Year,
 		&movie.Duration,
@@ -104,8 +105,7 @@ func (m MovieModel) Update(movie *Movie) error {
 		UPDATE movies
 		SET title = $1, year = $2, duration = $3, genres= $4, version = version + 1
 		WHERE id = $5
-		RETURNING version
-	`
+		RETURNING id`
 
 	args := []interface{}{
 		movie.Title,
@@ -114,7 +114,9 @@ func (m MovieModel) Update(movie *Movie) error {
 		pq.Array(movie.Genres),
 		movie.ID,
 	}
-	return m.DB.QueryRow(query, args...).Scan(&movie.Version)
+
+	// fmt.Println(*m.DB.QueryRow(query, args...))
+	return m.DB.QueryRow(query, args...).Scan(&movie.ID)
 }
 
 func (m MovieModel) Delete(id int64) error {
