@@ -9,3 +9,8 @@ a JSON API for retrieving and managing information about movies.
    - Triaging the Decode error gracefully handles errors and makes the error messages simpler, clearer, consistent in formatting and avoids unnecessary exposure of information.
 3. Custom request body validations
 4. SQL database schema migrations
+5. Simple CRUD operations
+6. Advanced CRUD operations
+   - Supports partial updates to a resource
+   - Optimistic concurrency control to avoid race conditions when two clients tries to update the same resource at the same time
+   - Context timeouts
