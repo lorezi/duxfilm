@@ -14,3 +14,5 @@ a JSON API for retrieving and managing information about movies.
    - Supports partial updates to a resource
    - Optimistic concurrency control to avoid race conditions when two clients tries to update the same resource at the same time
    - Context timeouts
+7. Filtering, Pagination and Sorting
+   - Reductive filtering - which allows clients to search based on a case insensitive exact match for movie.
