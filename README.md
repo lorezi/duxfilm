@@ -16,3 +16,4 @@ a JSON API for retrieving and managing information about movies.
    - Context timeouts
 7. Filtering, Pagination and Sorting
    - Reductive filtering - which allows clients to search based on a case insensitive exact match for movie.
+   - Postgres full-text search functionality
