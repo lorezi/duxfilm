@@ -18,3 +18,4 @@ a JSON API for retrieving and managing information about movies.
    - Reductive filtering - which allows clients to search based on a case insensitive exact match for movie.
    - Postgres full-text search functionality
    - Sorting lists
+8. Rich structured logging and error handling
