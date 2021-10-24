@@ -19,3 +19,4 @@ a JSON API for retrieving and managing information about movies.
    - Postgres full-text search functionality
    - Sorting lists
 8. Rich structured logging and error handling
+9. API rate limiting
