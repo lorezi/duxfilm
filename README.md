@@ -23,3 +23,4 @@ a JSON API for retrieving and managing information about movies.
    - Learn the principle behind token-bucket rate-limiter algorithms and how to apply them in context of an API or web application.
    - Use middleware to rate-limit requests to your API endpoints, first by making a single rate global limiter, then extending it to support per-client limiting based on IP address.
    - Configuration settings for rate limiter
+10. Graceful shutdown
