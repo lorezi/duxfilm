@@ -1,6 +1,6 @@
 module github.com/lorezi/duxfilm
 
-go 1.15
+go 1.17
 
 require (
 	github.com/go-mail/mail v2.3.1+incompatible // indirect

@@ -53,10 +53,19 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 		case errors.Is(err, data.ErrDuplicateEmail):
 			v.AddError("email", "a user with this email address already exists")
 			app.failedValidationResponse(w, r, v.Errors)
+
 		default:
 			app.serverErrorResponse(w, r, err)
 
 		}
+		return
+	}
+
+	// Call the Send() method on our Mailer, passing in the user's email address,
+	// name of the template file, and the User struct containing the new user's data.
+	err = app.mailer.Send(user.Email, "user_welcome.tmpl", user)
+	if err != nil {
+		app.serverErrorResponse(w, r, err)
 		return
 	}
 

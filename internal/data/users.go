@@ -118,7 +118,6 @@ func (u UserModel) Insert(user *User) error {
 			return ErrDuplicateEmail
 		default:
 			return err
-
 		}
 	}
 
