@@ -11,6 +11,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/lorezi/duxfilm/internal/data"
 	"github.com/lorezi/duxfilm/internal/jsonlog"
+	"github.com/lorezi/duxfilm/internal/mailer"
 	"github.com/subosito/gotenv"
 )
 
@@ -33,6 +34,13 @@ type config struct {
 		burst   int
 		enabled bool
 	}
+	smtp struct {
+		host     string
+		port     int
+		username string
+		password string
+		sender   string
+	}
 }
 
 // Define an application struct to build the dependencies for our HTTP handlers, helpers, and middleware.
@@ -40,6 +48,7 @@ type application struct {
 	config config
 	logger *jsonlog.Logger
 	models data.Models
+	mailer mailer.Mailer
 }
 
 func main() {
@@ -47,6 +56,8 @@ func main() {
 	dsn := "postgres://" + os.Getenv("DBUSER") + ":" + os.Getenv("DBPASS") + "@" + os.Getenv("DBHOST") + "/" + os.Getenv("DBNAME") + "?sslmode=disable"
 	maxOpenConns, _ := strconv.Atoi(os.Getenv("maxOpenConns"))
 	maxIdleConns, _ := strconv.Atoi(os.Getenv("maxIdleConns"))
+
+	smtpPort, _ := strconv.Atoi(os.Getenv("SMTP_PORT"))
 
 	// Declare an instance of the config struct
 	var cfg config
@@ -67,6 +78,13 @@ func main() {
 	flag.IntVar(&cfg.limiter.burst, "limiter-burst", 4, "Rate limiter maximum burst")
 	flag.BoolVar(&cfg.limiter.enabled, "limiter-enabled", true, "Enable rate limiter")
 
+	// SMTP Server Setup
+	flag.StringVar(&cfg.smtp.host, "smtp-host", os.Getenv("SMTP_HOST"), "SMTP host")
+	flag.IntVar(&cfg.smtp.port, "smtp-port", smtpPort, "SMTP port")
+	flag.StringVar(&cfg.smtp.username, "smtp-username", os.Getenv("SMTP_USERNAME"), "SMTP username")
+	flag.StringVar(&cfg.smtp.password, "smtp-password", os.Getenv("SMTP_PASSWORD"), "SMTP password")
+	flag.StringVar(&cfg.smtp.sender, "smtp-sender", os.Getenv("SMTP_SENDER"), "SMTP sender")
+
 	flag.Parse()
 
 	// Initialize a new jsonlog.Logger which writes any messages at or above the INFO severity level to the standard out stream
@@ -85,6 +103,7 @@ func main() {
 		config: cfg,
 		logger: logger,
 		models: data.NewModels(db),
+		mailer: mailer.New(cfg.smtp.host, cfg.smtp.port, cfg.smtp.username, cfg.smtp.password, cfg.smtp.sender),
 	}
 
 	// Call app.serve() to start the server
