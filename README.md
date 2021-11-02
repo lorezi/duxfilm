@@ -28,3 +28,4 @@ a JSON API for retrieving and managing information about movies.
 12. Email setup
     - Use `goroutine` to send email at the background
 13. Recovering panics while using goroutine
+14. Graceful shutdown of background tasks using syncWaitGroup https://play.golang.org/p/1j9-p8JOKWa
