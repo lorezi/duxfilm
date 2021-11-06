@@ -29,3 +29,10 @@ a JSON API for retrieving and managing information about movies.
     - Use `goroutine` to send email at the background
 13. Recovering panics while using goroutine
 14. Graceful shutdown of background tasks using syncWaitGroup https://play.golang.org/p/1j9-p8JOKWa
+15. User Activation
+
+- Activation functionality to confirm that a user used their own, real, email address by including 'account activation' instructions in their welcome email.
+- Implement a secure 'account activation' workflow which verifies a new user's email address.
+- Generate cryptographically secure random tokens
+- Generate fast hashes of data
+- Implement patterns for working with cross-table relationships in your database, including setting up foreign keys and retrieving related data via SQL JOIN queries
