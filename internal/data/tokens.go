@@ -11,6 +11,11 @@ import (
 	"github.com/lorezi/duxfilm/internal/validator"
 )
 
+// Define constants for the token scope. For now we just define the scope "activation"
+const (
+	ScopeActivation = "activation"
+)
+
 // Define a Token struct to hold the data for an individual token. This includes the plaintext and hashed versions of the token, associated user ID, expiry time and scope.
 type Token struct {
 	Plaintext string
