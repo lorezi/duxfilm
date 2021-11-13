@@ -28,6 +28,7 @@ func (app *application) getParamID(r *http.Request) (int64, error) {
 
 }
 
+// Converts a Go struct to JSON
 func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
 	// encode data to json
 	js, err := json.MarshalIndent(data, "", "\t")
@@ -50,6 +51,7 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data envelo
 }
 
 // powerful and reusable helper
+// Converts a JSON to a Go struct
 func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst interface{}) error {
 	maxBytes := 1_048_576
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
