@@ -26,6 +26,9 @@ func (app *application) routes() http.Handler {
 	// Users endpoint
 	router.HandlerFunc(http.MethodPost, "/v1/users/register", app.registerUserHandler)
 
+	// Activation endpoint
+	router.HandlerFunc(http.MethodPut, "/v1/users/activated", app.activateUserHandler)
+
 	// Wrap the router with the recovery middleware.
 	return app.recoverPanic(app.rateLimit(router))
 }
