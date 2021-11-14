@@ -37,3 +37,5 @@ a JSON API for retrieving and managing information about movies.
 - Generate fast hashes of data
 - Implement patterns for working with cross-table relationships in your database, including setting up foreign keys and retrieving related data via SQL JOIN queries
 - Implements user activation after user account creation
+
+16. Authentication feature (Know the user)
