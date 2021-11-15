@@ -29,7 +29,7 @@ func (app *application) routes() http.Handler {
 	// Activation endpoint
 	router.HandlerFunc(http.MethodPut, "/v1/users/activated", app.activateUserHandler)
 
-	// authentication endpoint
+	// authentication endpoint ==> /v1/login
 	router.HandlerFunc(http.MethodPost, "/v1/tokens/authentication", app.createAuthenticationTokenHandler)
 
 	// Wrap the router with the recovery middleware.
