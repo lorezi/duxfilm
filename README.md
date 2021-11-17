@@ -42,5 +42,8 @@ a JSON API for retrieving and managing information about movies.
 
 - Get authentication token
 - Authentication requests
+
   1.  If token is valid, look up the user details and add their details to the request context.
   2.  If no Authorization header was provided at all, then we will add the details for an anonymous user to the request context instead.
+
+- Dev feature branch
