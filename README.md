@@ -43,10 +43,11 @@ a JSON API for retrieving and managing information about movies.
 - Get authentication token
 - Authentication requests
 
-  1.  If token is valid, look up the user details and add their details to the request context.
-  2.  If no Authorization header was provided at all, then we will add the details for an anonymous user to the request context instead.
+  - If token is valid, look up the user details and add their details to the request context.
+  - If no Authorization header was provided at all, then we will add the details for an anonymous user to the request context instead.
 
 17. Permission-based Authorization
 
 - Add checks so that only activated users are able to access the various endpoints
 - Implement a permission-based authorization pattern, which provides fine-grained control over exactly which users can access which endpoints
+- Create a subset of permissions that only users who have a specific permission can perform specific operations.
