@@ -51,3 +51,7 @@ a JSON API for retrieving and managing information about movies.
 - Add checks so that only activated users are able to access the various endpoints
 - Implement a permission-based authorization pattern, which provides fine-grained control over exactly which users can access which endpoints
 - Create a subset of permissions that only users who have a specific permission can perform specific operations.
+
+18. CORS
+
+- Supporting multiple dynamic origins
