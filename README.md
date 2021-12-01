@@ -55,3 +55,12 @@ a JSON API for retrieving and managing information about movies.
 18. CORS
 
 - Supporting multiple dynamic origins
+- Middleware to intercepts and responds to any preflight requests.
+
+19. Metrics - Performance insight into your application - Instrumentation of the Golang app
+
+- Gives insight to how much memory is the application using and how this is changing over time
+- How many goroutines are currently in use and changes over time
+- How many database connections are in use and how many are idle
+- What's the ratio of successful HTTP responses to both client and server errors
+- Use the expvar package to view application metrics in JSON format via a HTTP handler.
