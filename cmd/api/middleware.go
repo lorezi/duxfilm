@@ -283,7 +283,7 @@ func (app *application) metrics(next http.Handler) http.Handler {
 
 		// Calculate the number of microseconds since we began to process the request,
 		// then increment the total processing time by this amount.
-		duration := time.Now().Sub(start).Microseconds()
+		duration := time.Since(start).Microseconds()
 		totalProcessingTimeMicroseconds.Add(duration)
 	})
 }
