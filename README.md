@@ -64,3 +64,7 @@ a JSON API for retrieving and managing information about movies.
 - How many database connections are in use and how many are idle
 - What's the ratio of successful HTTP responses to both client and server errors
 - Use the expvar package to view application metrics in JSON format via a HTTP handler.
+- Request-level metrics - Total number of requests received & responses sent and the total time taken to process all requests in microseconds
+
+- UnMarshal json to golang struct: https://go.dev/play/p/by_OhVyTANB
+- UnMarshal json to golang struct: https://go.dev/play/p/x3kEisafNPo
