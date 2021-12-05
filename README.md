@@ -68,3 +68,7 @@ a JSON API for retrieving and managing information about movies.
 
 - UnMarshal json to golang struct: https://go.dev/play/p/by_OhVyTANB
 - UnMarshal json to golang struct: https://go.dev/play/p/x3kEisafNPo
+
+20. Use a makefile to automate common tasks in your project, such as creating and executing migrations.
+
+- Carry out quality control checks of your code using the `go go vet` and staticcheck tools
