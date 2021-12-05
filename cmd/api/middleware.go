@@ -2,13 +2,16 @@ package main
 
 import (
 	"errors"
+	"expvar"
 	"fmt"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/felixge/httpsnoop"
 	"github.com/lorezi/duxfilm/internal/data"
 	"github.com/lorezi/duxfilm/internal/validator"
 	"golang.org/x/time/rate"
@@ -257,5 +260,37 @@ func (app *application) enableCORS(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(w, r)
+	})
+}
+
+func (app *application) metrics(next http.Handler) http.Handler {
+	// Initialize the new expvar variables when the middleware chain in first built.
+	totalRequestReceived := expvar.NewInt("total_requests_received")
+	totalResponsesSent := expvar.NewInt("total_responses_sent")
+	totalProcessingTimeMicroseconds := expvar.NewInt("total_processing_time_ūs")
+	totalResponsesSentByStatus := expvar.NewMap("total_responses_sent_by_status")
+
+	// The following code will be run for every request...
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		// Use the Add() method to increment the number of requests received by 1.
+		totalRequestReceived.Add(1)
+
+		// Call the httpsnoop.CaptureMetrics() function, passing in the next handler in the chain along with
+		// the existing http.ResponseWriter and http.Request.
+		metrics := httpsnoop.CaptureMetrics(next, w, r)
+
+		// On the way back up the middleware chain, increment the number or responses sent by 1
+		totalResponsesSent.Add(1)
+
+		// Calculate the number of microseconds since we began to process the request,
+		// then increment the total processing time by this amount.
+
+		totalProcessingTimeMicroseconds.Add(metrics.Duration.Microseconds())
+
+		// Use the Add() method to increment the count for the given status code by 1.
+		// Note that the expvar map is string-keyed, so we need to use the strconv.Itoa() function
+		// to convert the status code (which is an integer) to a string.
+		totalResponsesSentByStatus.Add(strconv.Itoa(metrics.Code), 1)
 	})
 }
