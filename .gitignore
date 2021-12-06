@@ -1,3 +1,5 @@
 .dbdata
 .env
 .vscode
+api
+bin/

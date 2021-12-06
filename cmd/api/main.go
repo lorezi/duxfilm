@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"expvar"
 	"flag"
+	"fmt"
 	"os"
 	"runtime"
 	"strconv"
@@ -21,6 +22,10 @@ import (
 
 // Declare a string containing the application version number.
 const version = "1.0.0"
+
+// Create a buildTime variable to hold the executable binary build time. Note that this must be a string type,
+// as the -X linker flag will only work with string variable.
+var buildTime string
 
 // Define a config struct to hold all the configuration settings for out application
 
@@ -103,7 +108,17 @@ func main() {
 		return nil
 	})
 
+	// Create a new version boolean flag with the default value of false.
+	displayVersion := flag.Bool("version", false, "Display version and exit")
+
 	flag.Parse()
+
+	// If the version flag value is true, then print out the version number and immediately exit.
+	if *displayVersion {
+		fmt.Printf("Version:\t%s\n", version)
+		fmt.Printf("Build time:\t%s\n", buildTime)
+		os.Exit(0)
+	}
 
 	// Initialize a new jsonlog.Logger which writes any messages at or above the INFO severity level to the standard out stream
 	logger := jsonlog.New(os.Stdout, jsonlog.LevelInfo)

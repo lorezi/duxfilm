@@ -72,3 +72,4 @@ a JSON API for retrieving and managing information about movies.
 20. Use a makefile to automate common tasks in your project, such as creating and executing migrations.
 
 - Carry out quality control checks of your code using the `go go vet` and staticcheck tools
+- Generate version numbers automatically based on Git commits and integrate them into your application.
