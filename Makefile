@@ -68,7 +68,8 @@ audit:
 # 	======================================================================	#
 
 current_time = $(shell date +"%Y-%m-%dT%H:%M:%S")
-linker_flags = '-s -w -X main.buildTime=${current_time}'
+git_description = $(shell git describe --always --dirty)
+linker_flags = '-s -w -X main.buildTime=${current_time} -X main.version=${git_description}'
 
 ## build/api: build the cmd/api application
 .PHONY: build/api

@@ -20,12 +20,10 @@ import (
 	"github.com/subosito/gotenv"
 )
 
-// Declare a string containing the application version number.
-const version = "1.0.0"
-
-// Create a buildTime variable to hold the executable binary build time. Note that this must be a string type,
-// as the -X linker flag will only work with string variable.
-var buildTime string
+var (
+	buildTime string
+	version   string
+)
 
 // Define a config struct to hold all the configuration settings for out application
 
